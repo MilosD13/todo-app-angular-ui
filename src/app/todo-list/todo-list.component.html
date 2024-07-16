@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="header">
+    <button class="logout-btn" (click)="logout()">Logout</button>
+  </div>
+  <div class="input-group">
+    <input type="text" [(ngModel)]="newTask" placeholder="New task" />
+    <button (click)="addTodo()">Add Todo</button>
+  </div>
+
+  <div class="section">
+    <div class="section-title">To Do</div>
+    <div *ngFor="let todo of todos">
+      <div
+        *ngIf="!todo.isComplete"
+        class="todo-item"
+        [class.edit-mode]="editTodoId === todo.id"
+      >
+        <div class="task" *ngIf="editTodoId !== todo.id">{{ todo.task }}</div>
+        <div class="actions" *ngIf="editTodoId !== todo.id">
+          <button (click)="startEdit(todo)">Edit</button>
+          <button (click)="completeTodo(todo.id)" class="complete-btn">
+            Complete
+          </button>
+          <button (click)="deleteTodo(todo.id)" class="delete-btn">
+            Delete
+          </button>
+        </div>
+        <div *ngIf="editTodoId === todo.id">
+          <input type="text" [(ngModel)]="editTask" />
+          <div class="actions">
+            <button (click)="updateTodo()">Update</button>
+            <button (click)="cancelEdit()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Completed</div>
+    <div *ngFor="let todo of todos">
+      <div *ngIf="todo.isComplete" class="todo-item completed">
+        <div class="task">{{ todo.task }}</div>
+        <div class="actions">
+          <button (click)="deleteTodo(todo.id)" class="delete-btn">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
